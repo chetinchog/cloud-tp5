@@ -42,11 +42,13 @@ Ver por ejemplo: https://gitlab.com/autokent/pdf-parse
 - Texto (para Algolia)
 
 ### Todos los archivos
+// Sea el tipo que sea.
 
 - Nombre
 - Fecha de creacion
 - Tamaño en bytes
 - Tipo (puede ser la extensión)
+- URL pública
 
 ## Recursos a implementar en API
 
@@ -70,3 +72,15 @@ Devuelve los archivos TXT o PDF encontrados con una búsqueda full-text, utiliza
 Por cada archivo PDF o TXT, es necesario extraer el texto del cuerpo y enviarlo al API de Algolia, identificandolo por el id del archivo en la base de datos.
 
 Luego al realizar búsquedas, Algolia retornará los ids que coinciden y el backend deberá buscar en mongo los metadatos para devolver.
+
+## Anotaciones
+
+Cuando se cargue un archivo en el bucket, se debe ejecutar el evento que llame a la función que obtiene los datos del archivo cargado y guarda la información correspondiente según el enunciado. Para realizarlo Cloud Native, realizar una función para los datos comunes y luego una función por tipo de archivo y/o datos a buscar.
+En las búsquedas a la base de datos, solo debe devolver los datos, no los archivos.
+Para el texto, guardar en Angolia el id del objeto y el texto. Al buscar en Angolia nos devolverá los id de lo encontrado para luego nosotros buscar la info de los archivos con esos id.
+
+## Entrega
+
+Entrega el 20. Si no llegan, el 27 se pueden venir a preguntar y terminar.
+Entregar mediante un repo con todas las carpetas (funciones, dockerfile, etc).
+Tenerlo funcionando para la entrega. Recomendado tenerlo todo en la máquina.
