@@ -60,7 +60,7 @@ Devuelve los archivos del tipo o extension especificados
 Devuelve los archivos cuyo nombre contenga el texto especificado
 - GET /file?from={timestamp}&to={timestamp}  
 Devuelve los archivos cuya fecha de creacion este entre los timestamps especificados
-- GET /image?size={S|M|L}  
+- GET /image?size={S|M|L}  // comparar con el valor ancho/alto más chico
 Devuelve las imagenes filtradas por tamaño, donde S es pequeño (hasta 500px), M es mediano (hasta 1000px) y L es grande (más de 1000px).
 - GET /text?q={texto}  
 Devuelve los archivos TXT o PDF encontrados con una búsqueda full-text, utilizando Algolia (ver a continuación)
