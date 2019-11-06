@@ -41,10 +41,10 @@ spec:
               port: 9000
             initialDelaySeconds: 120
             periodSeconds: 20
-      # volumes:
-      #   - name: data
-      #     hostPath:
-      #       path: /home/che/Documents/cloud/cloud-tp5/minio/data
+      volumes:
+        - name: data
+          hostPath:
+            path: /home/che/Documents/cloud/cloud-tp5/minio/data
   # These are converted to volume claims by the controller
   # and mounted at the paths mentioned above.
   volumeClaimTemplates:
