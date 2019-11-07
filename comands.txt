@@ -1,0 +1,17 @@
+docker network create --driver bridge tp5
+docker rm -f minio; docker run -dit -p 9000:9000 \
+  -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123 \
+  --hostname minio \
+  --name minio \
+  --network func_functions \
+  -v /home/che/Documents/cloud/cloud-tp5/minio/data:/data \
+  minio/minio server /data
+
+docker inspect func_functions | grep -i "name\|subnet\|gateway\|ipv4"
+docker network connect func_functions minio
+
+docker run --rm -it --network func_functions --entrypoint=/bin/sh minio/mc
+mc config host add minio http://minio:9000 minio minio123
+
+mc event add minio/tp5 arn:minio:sqs::1:webhook --event put --suffix .jpg
+mc event list minio/tp5
