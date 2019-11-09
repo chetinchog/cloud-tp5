@@ -29,3 +29,5 @@ faas up -f new-file.yml
 faas logs new-file
 
 docker rm -f func_mdb; docker run -di --name func_mdb --hostname func_mdb --network func_functions -p 27017:27017 -v /data/db:/data/db --cap-add NET_ADMIN mongo
+
+faas remove new-file; faas up -f new-file.yml && faas logs new-file

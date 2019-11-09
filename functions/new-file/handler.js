@@ -1,14 +1,55 @@
 "use strict";
+const mongoose = require("mongoose");
 
-module.exports = (event, context) => {
+const mongoConnection = new Promise((resolve, reject) =>
+  mongoose.connect(
+    "mongodb://func_mdb:27017/tp-final",
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    (err, db) => (err ? reject(err) : resolve(db))
+  )
+);
+
+const File = mongoose.model(
+  "file",
+  new mongoose.Schema({
+    name: String,
+    date: Date,
+    size: Number,
+    type: String,
+    bucket: String,
+    data: {
+      type: mongoose.SchemaTypes.Mixed,
+      required: false
+    }
+  })
+);
+
+const splitKey = key => ({
+  bucket: key.split("/")[0],
+  name: key.split("/")[0].split(".")[0],
+  type: key.split("/")[0].split(".")[1]
+});
+
+module.exports = async (event, context) => {
   try {
-    context.status(200).succeed("Done!");
-  } catch (e) {
-    console.log("TCL: e", e);
-    context.status(400).fail(e);
+    if (event.body.Key) {
+      await mongoConnection;
+      const record = event.body.Records.find(
+        record => record.eventName === "s3:ObjectCreated:Put"
+      );
+      context.status(200).succeed(
+        await new File({
+          ...splitKey(event.body.Key),
+          date: record.eventTime,
+          size: record.s3.object.size
+        }).save()
+      );
+    } else context.status(400).fail("No data");
+  } catch (error) {
+    console.log("TCL: error", error);
+    context.status(500).fail(error);
   }
 };
-
 
 const EVENT = {
   EventName: "s3:ObjectCreated:Put",
