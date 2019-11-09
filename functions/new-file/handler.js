@@ -26,8 +26,8 @@ const File = mongoose.model(
 
 const splitKey = key => ({
   bucket: key.split("/")[0],
-  name: key.split("/")[0].split(".")[0],
-  type: key.split("/")[0].split(".")[1]
+  name: key.split("/")[1].split(".")[0],
+  type: key.split("/")[1].split(".")[1]
 });
 
 module.exports = async (event, context) => {
