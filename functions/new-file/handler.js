@@ -2,12 +2,6 @@
 
 module.exports = (event, context) => {
   try {
-    console.log("BODY", event.body);
-    console.log("userIdentity", event.body.Records[0].userIdentity);
-    console.log("requestParameters", event.body.Records[0].requestParameters);
-    console.log("responseElements", event.body.Records[0].responseElements);
-    console.log("s3", event.body.Records[0].s3);
-    console.log("source", event.body.Records[0].source);
     context.status(200).succeed("Done!");
   } catch (e) {
     console.log("TCL: e", e);
@@ -15,8 +9,8 @@ module.exports = (event, context) => {
   }
 };
 
-// POST / - 500 Internal Server Error - ContentLength: 2
-BODY = {
+
+const EVENT = {
   EventName: "s3:ObjectCreated:Put",
   Key: "tp5/g413.jpg",
   Records: [
@@ -64,4 +58,6 @@ BODY = {
     }
   ]
 };
-// POST / - 200 OK - ContentLength: 5
+
+const FILEURL =
+  "http://localhost:9000/tp5/1568767528.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=minio%2F20191109%2F%2Fs3%2Faws4_request&X-Amz-Date=20191109T013705Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=89e49f4214e745eb7ec8cd8b8b883125bfd1d020d1ff93012898989cc14988b3";
