@@ -39,6 +39,7 @@ module.exports = async (event, context) => {
       );
       context.status(200).succeed(
         await new File({
+          _id: event.body.Key,
           ...splitKey(event.body.Key),
           date: record.eventTime,
           size: record.s3.object.size

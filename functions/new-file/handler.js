@@ -1,6 +1,6 @@
 "use strict";
-var MongoClient = require("mongodb").MongoClient;
-var url = "mongodb://func_mdb:27017/";
+const MongoClient = require("mongodb").MongoClient;
+const url = "mongodb://func_mdb:27017/";
 
 const connect = MongoClient.connect(url, { useUnifiedTopology: true });
 const run = (conn, db, collection, foo, obj) =>
@@ -22,6 +22,7 @@ module.exports = async (event, context) => {
         record => record.eventName === "s3:ObjectCreated:Put"
       );
       await run(await connect, "tp5", "file", "insertOne", {
+        _id: event.body.Key,
         ...splitKey(event.body.Key),
         date: record.eventTime,
         size: record.s3.object.size
