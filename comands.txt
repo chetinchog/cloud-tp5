@@ -20,7 +20,8 @@ mc config host add minio http://minio:9000 minio minio123
 				"queueLimit": 0
 			}
 
-mc event add minio/tp5 arn:minio:sqs::1:webhook --event put --suffix .jpg
+mc event add minio/tp5 arn:minio:sqs::1:webhook --event put
+mc event add minio/tp5 arn:minio:sqs::1:webhook --event put --suffix .jpg,.png
 mc event list minio/tp5
 
 faas template store pull node10-express
