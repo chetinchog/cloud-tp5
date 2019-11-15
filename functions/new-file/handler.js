@@ -10,9 +10,10 @@ const splitKey = key => ({
 });
 
 module.exports = async (req, res) => {
+  const { Key, Records } = req.body;
   try {
-    if (req.body.Key) {
-      const record = req.body.Records.find(
+    if (Key) {
+      const record = Records.find(
         record => record.eventName === "s3:ObjectCreated:Put"
       );
       (await connect)
@@ -20,12 +21,12 @@ module.exports = async (req, res) => {
         .collection("file")
         .update(
           {
-            _id: req.body.Key
+            _id: Key
           },
           {
             $set: {
-              _id: req.body.Key,
-              ...splitKey(req.body.Key),
+              _id: Key,
+              ...splitKey(Key),
               date: record.eventTime,
               size: record.s3.object.size
             }
