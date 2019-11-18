@@ -34,3 +34,4 @@ docker rm -f func_mdb; docker run -di --name func_mdb --hostname func_mdb --netw
 faas remove new-file; faas up -f new-file.yml && faas logs new-file
 faas remove width-heigth; faas up -f width-heigth.yml && faas logs width-heigth
 faas remove info-exif; faas up -f info-exif.yml && faas logs info-exif
+faas remove pdf-data; faas up -f pdf-data.yml && faas logs pdf-data
