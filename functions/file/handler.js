@@ -19,11 +19,11 @@ module.exports = async (req, res) => {
         if (to) listFilter.push({ date: { $lte: new Date(to * 1000) } });
         filter = { ...filter, $and: listFilter };
       }
-
       const listFile = await (await connect)
         .db("tp5")
         .collection("file")
         .find(filter)
+        .sort({ name: 1 })
         .toArray();
       res.status(200).succeed(listFile);
     } else {

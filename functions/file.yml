@@ -3,7 +3,7 @@ provider:
   name: openfaas
   gateway: http://127.0.0.1:8080
 functions:
-  get-file:
+  file:
     lang: node10-express
-    handler: ./get-file
-    image: chetinchog/get-file:latest
+    handler: ./file
+    image: chetinchog/file:latest
