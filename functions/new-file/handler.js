@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
             $set: {
               _id: Key,
               ...splitKey(Key),
-              date: record.eventTime,
+              date: new Date(record.eventTime),
               size: record.s3.object.size
             }
           },
